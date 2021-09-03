@@ -1,2 +1,3 @@
 rootProject.name = 'Multiproject-Movies'
 
+include 'service-users'
