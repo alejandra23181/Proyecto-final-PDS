@@ -1,5 +1,6 @@
 package co.com.poli.users.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class User {
 
     @Column(name="lastname")
     private String lastname;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 
     @Override
     public boolean equals(Object o) {
