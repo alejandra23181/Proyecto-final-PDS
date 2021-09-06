@@ -5,7 +5,7 @@ plugins {
 }
 
 allprojects{
-    group = 'co.com.poli.store'
+    group = 'co.com.poli.movies'
     version = '0.1'
     sourceCompatibility = JavaVersion.VERSION_1_8
 
