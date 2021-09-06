@@ -1,10 +1,10 @@
-package co.com.poli.users.controller;
+package com.example.movie.controller;
 
-import co.com.poli.users.entities.User;
-import co.com.poli.users.services.UserService;
-import co.com.poli.users.utils.ErrorMessage;
-import co.com.poli.users.utils.Response;
-import co.com.poli.users.utils.ResponseBuilder;
+import com.example.movie.Utils.ErrorMessage;
+import com.example.movie.Utils.Response;
+import com.example.movie.Utils.ResponseBuilder;
+import com.example.movie.entities.Movie;
+import com.example.movie.services.MovieService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,49 +21,47 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/movies")
 @RequiredArgsConstructor
-public class UserController {
+public class MovieController {
 
-    private final UserService userService;
+    private final MovieService movieService;
     private final ResponseBuilder builder;
 
     @PostMapping
-    public Response save(@Valid @RequestBody User user, BindingResult result){
+    public Response save(@Valid @RequestBody Movie movie, BindingResult result){
         if(result.hasErrors()){
             return builder.failed(formatMessage(result));
         }
-        userService.save(user);
-        return builder.success(user);
+        movieService.save(movie);
+        return builder.success(movie);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@PathVariable("id") Long id){
-        User user = userService.findById(id);
-        if(user==null){
+    public ResponseEntity<Movie> delete(@PathVariable("id") Long id){
+        Movie movie = movieService.findById(id);
+        if(movie==null){
             return ResponseEntity.notFound().build();
         }
-        userService.delete(user);
-        return ResponseEntity.ok(user);
+        movieService.delete(movie);
+        return ResponseEntity.ok(movie);
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> users = userService.findAll();
-        if (users.isEmpty()){
+    @GetMapping()
+    public ResponseEntity<List<Movie>> findAll(){
+        List<Movie> movies = movieService.findAll();
+        if(movies.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(users);
+            return ResponseEntity.ok(movies);
     }
-
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") Long id){
-        User user = userService.findById(id);
-        if(user==null){
+    public ResponseEntity<Movie> findById(@PathVariable("id") Long id) {
+        Movie movie = movieService.findById(id);
+        if (movie == null) {
             return ResponseEntity.notFound().build();
         }
-        userService.delete(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(movie);
     }
 
     private String formatMessage(BindingResult result){
@@ -87,6 +85,5 @@ public class UserController {
         }
         return json;
     }
-
 
 }

@@ -1,44 +1,46 @@
-package co.com.poli.users.entities;
+package com.example.movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 
-@Getter
 @Setter
+@Getter
 @Entity
-@Table(name="users")
+@Table(name="movie")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class User {
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", updatable = false, nullable = false, unique = true)
-    private long id;
+    @Column(name="id", updatable = false,nullable = false,unique = true)
+    private Long id;
 
     @NotEmpty(message = "Este campo es obligatorio, por favor ingrese los datos solicitados")
-    @Column(name = "name")
-    private String name;
+    @Column(name="title")
+    private String title;
 
     @NotEmpty(message = "Este campo es obligatorio, por favor ingrese los datos solicitados")
-    @Column(name="lastname")
-    private String lastname;
+    @Column(name="director")
+    private String director;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @Column(name="rating")
+    @Range(min=1,max=5)
+    private Integer rating;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
+        Movie movie = (Movie) o;
+        return Objects.equals(id, movie.id);
     }
 
     @Override
