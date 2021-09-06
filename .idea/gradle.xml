@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/service-movie" />
+            <option value="$PROJECT_DIR$/service-showtimes" />
             <option value="$PROJECT_DIR$/service-users" />
           </set>
         </option>

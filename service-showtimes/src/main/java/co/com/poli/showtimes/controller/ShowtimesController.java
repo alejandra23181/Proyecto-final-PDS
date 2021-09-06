@@ -1,10 +1,11 @@
-package com.example.movie.controller;
+package co.com.poli.showtimes.controller;
 
-import com.example.movie.utils.ErrorMessage;
-import com.example.movie.utils.Response;
-import com.example.movie.utils.ResponseBuilder;
-import com.example.movie.entities.Movie;
-import com.example.movie.services.MovieService;
+import co.com.poli.showtimes.entities.Showtimes;
+import co.com.poli.showtimes.model.Movie;
+import co.com.poli.showtimes.services.ShowtimesServiceImpl;
+import co.com.poli.showtimes.utils.ErrorMessage;
+import co.com.poli.showtimes.utils.Response;
+import co.com.poli.showtimes.utils.ResponseBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,50 +20,51 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/showtimes")
 @RequiredArgsConstructor
-public class MovieController {
+public class ShowtimesController {
 
-    private final MovieService movieService;
+    private final ShowtimesServiceImpl showtimesService;
     private final ResponseBuilder builder;
 
     @PostMapping
-    public Response save(@Valid @RequestBody Movie movie, BindingResult result){
+    public Response save(@Valid @RequestBody Showtimes showtimes, BindingResult result){
         if(result.hasErrors()){
             return builder.failed(formatMessage(result));
         }
-        movieService.save(movie);
-        return builder.success(movie);
+        showtimesService.save(showtimes);
+        return builder.success(showtimes);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Movie> delete(@PathVariable("id") Long id){
-        Movie movie = movieService.findById(id);
-        if(movie==null){
-            return ResponseEntity.notFound().build();
+    public Response delete(@PathVariable("id") Long id) {
+        Showtimes showtimes = showtimesService.findById(id);
+        if(showtimes==null){
+            return builder.failed(showtimes);
         }
-        movieService.delete(movie);
-        return ResponseEntity.ok(movie);
+        return builder.success(showtimes);
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Movie>> findAll(){
-        List<Movie> movies = movieService.findAll();
-        if(movies.isEmpty()){
+    @GetMapping
+    public ResponseEntity<List<Showtimes>> findAll(){
+        List<Showtimes> showtimes = showtimesService.findAll();
+        if (showtimes.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-            return ResponseEntity.ok(movies);
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<Movie> findById(@PathVariable("id") Long id) {
-        Movie movie = movieService.findById(id);
-        if (movie == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(movie);
+        return ResponseEntity.ok(showtimes);
     }
 
-    private String formatMessage(BindingResult result){
+    @GetMapping("/{id}")
+    public Response getById(@PathVariable("id") Long id){
+        Showtimes showtimes = showtimesService.findById(id);
+        if(showtimes==null){
+            return builder.success();
+        }
+        return builder.success(showtimes);
+    }
+
+
+        private String formatMessage(BindingResult result){
         List<Map<String,String>> errors = result.getFieldErrors().stream()
                 .map(err -> {
                     Map<String,String> error = new HashMap<>();

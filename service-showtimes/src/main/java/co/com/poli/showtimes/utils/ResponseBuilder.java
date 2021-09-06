@@ -1,4 +1,4 @@
-package com.example.movie.Utils;
+package co.com.poli.showtimes.utils;
 
 import org.springframework.stereotype.Component;
 
@@ -7,7 +7,6 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Component
 public class ResponseBuilder {
-
     public Response success(){
         return Response.builder()
                 .data(OK)

@@ -1,4 +1,4 @@
-package com.example.movie.Utils;
+package com.example.movie.utils;
 
 
 import lombok.Builder;
