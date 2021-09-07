@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          url: file://
+          url: file://C:/Users/Asus/OneDrive/Escritorio/UNIVERSIDAD 2021-1/PDS
   security:
     user:
       name: admin

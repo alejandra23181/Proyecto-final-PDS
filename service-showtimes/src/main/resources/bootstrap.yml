@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:9000
+      username: admin
+      password: admin
+  application:
+    name: service-showtimes
