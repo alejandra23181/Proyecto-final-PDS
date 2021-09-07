@@ -27,13 +27,11 @@ public class Showtimes {
 
     @NotEmpty(message = "Este campo es obligatorio, por favor ingrese los datos solicitados")
     @Column(name = "date")
-    private Date date;
+    private String date;
 
-    @Column(name = "movieId")
-    private Long movieId;
-
+    private Long MovieId;
     @Transient
-    private Movie movie;
+    private Showtimes showtimes;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 

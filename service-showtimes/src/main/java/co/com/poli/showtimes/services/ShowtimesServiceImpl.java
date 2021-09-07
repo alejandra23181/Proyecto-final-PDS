@@ -18,7 +18,6 @@ public class ShowtimesServiceImpl implements ShowtimesService{
     private final ShowtimesRepository showtimesRepository;
     private final MovieClient movieClient;
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(Showtimes showtimes) {
@@ -43,17 +42,6 @@ public class ShowtimesServiceImpl implements ShowtimesService{
         return showtimesRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public Showtimes findByMovieId(Long movieId) {
-        Showtimes showtimes = showtimesRepository.findByMovieId(movieId);
-        ModelMapper modelMapper = new ModelMapper();
 
-        Movie movie =
-                modelMapper.map(
-                        movieClient.findById(showtimes.getId()).getData(),
-                        Movie.class);
-        showtimes.setMovie(movie);
-        return showtimesRepository.findByMovieId(movieId);
-    }
 
 }

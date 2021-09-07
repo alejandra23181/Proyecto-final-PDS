@@ -9,5 +9,4 @@ public interface ShowtimesService {
     void delete(Showtimes showtimes);
     List<Showtimes> findAll();
     Showtimes findById(Long id);
-    Showtimes findByMovieId(Long id);
 }
