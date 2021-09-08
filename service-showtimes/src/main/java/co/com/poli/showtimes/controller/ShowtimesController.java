@@ -1,7 +1,6 @@
 package co.com.poli.showtimes.controller;
 
 import co.com.poli.showtimes.entities.Showtimes;
-import co.com.poli.showtimes.model.Movie;
 import co.com.poli.showtimes.services.ShowtimesServiceImpl;
 import co.com.poli.showtimes.utils.ErrorMessage;
 import co.com.poli.showtimes.utils.Response;

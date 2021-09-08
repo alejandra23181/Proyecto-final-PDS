@@ -1,22 +1,21 @@
 package co.com.poli.showtimes.services;
 
-import co.com.poli.showtimes.client.MovieClient;
+
 import co.com.poli.showtimes.entities.Showtimes;
-import co.com.poli.showtimes.model.Movie;
+
 import co.com.poli.showtimes.repositories.ShowtimesRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ShowtimesServiceImpl implements ShowtimesService{
 
     private final ShowtimesRepository showtimesRepository;
-    private final MovieClient movieClient;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -25,7 +24,6 @@ public class ShowtimesServiceImpl implements ShowtimesService{
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void delete(Showtimes showtimes) {
         showtimesRepository.delete(showtimes);
     }
@@ -41,6 +39,8 @@ public class ShowtimesServiceImpl implements ShowtimesService{
     public Showtimes findById(Long id) {
         return showtimesRepository.findById(id).orElse(null);
     }
+
+
 
 
 

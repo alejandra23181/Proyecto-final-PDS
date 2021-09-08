@@ -1,6 +1,5 @@
 package co.com.poli.showtimes.entities;
 
-import co.com.poli.showtimes.model.Movie;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -27,11 +26,11 @@ public class Showtimes {
 
     @NotEmpty(message = "Este campo es obligatorio, por favor ingrese los datos solicitados")
     @Column(name = "date")
-    private String date;
+    private Date date;
 
-    private Long MovieId;
-    @Transient
-    private Showtimes showtimes;
+    @ElementCollection
+    @Column(name = "movies_id")
+    private  List<Long> movies;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
