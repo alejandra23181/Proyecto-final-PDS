@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,9 +41,6 @@ public class ShowtimesServiceImpl implements ShowtimesService{
     public Showtimes findById(Long id) {
         return showtimesRepository.findById(id).orElse(null);
     }
-
-
-
 
 
 }
