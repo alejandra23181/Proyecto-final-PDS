@@ -24,7 +24,6 @@ public class Showtimes {
     @Column(name="id", updatable = false, nullable = false, unique = true)
     private long id;
 
-    @NotEmpty(message = "Este campo es obligatorio, por favor ingrese los datos solicitados")
     @Column(name = "date")
     private Date date;
 

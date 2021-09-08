@@ -36,12 +36,13 @@ public class ShowtimesController {
     }
 
     @DeleteMapping("/{id}")
-    public Response delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Showtimes> delete(@PathVariable("id") Long id) {
         Showtimes showtimes = showtimesService.findById(id);
         if(showtimes==null){
-            return builder.failed(showtimes);
+            return ResponseEntity.notFound().build();
         }
-        return builder.success(showtimes);
+        showtimesService.delete(showtimes);
+        return ResponseEntity.ok(showtimes);
     }
 
     @GetMapping
@@ -54,12 +55,13 @@ public class ShowtimesController {
     }
 
     @GetMapping("/{id}")
-    public Response getById(@PathVariable("id") Long id){
+    public ResponseEntity<Showtimes> getById(@PathVariable("id") Long id){
         Showtimes showtimes = showtimesService.findById(id);
         if(showtimes==null){
-            return builder.success();
+            return ResponseEntity.notFound().build();
         }
-        return builder.success(showtimes);
+        showtimesService.delete(showtimes);
+        return ResponseEntity.ok(showtimes);
     }
 
 

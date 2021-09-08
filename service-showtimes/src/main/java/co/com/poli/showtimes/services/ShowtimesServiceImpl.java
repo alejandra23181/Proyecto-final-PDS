@@ -24,12 +24,13 @@ public class ShowtimesServiceImpl implements ShowtimesService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Showtimes showtimes) {
         showtimesRepository.delete(showtimes);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true)
     public List<Showtimes> findAll() {
         return showtimesRepository.findAll();
     }
