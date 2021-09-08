@@ -13,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -46,6 +43,15 @@ public class ShowtimesController {
         return ResponseEntity.ok(showtimes);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Showtimes> save(@PathVariable("id") Long id, @RequestBody Showtimes showtimes){
+        Showtimes showtimesData = showtimesService.findById(id);
+        showtimesData.setDate(showtimes.getDate());
+        showtimesData.setMovies(showtimes.getMovies());
+        showtimesService.save(showtimes);
+        return ResponseEntity.ok(showtimes);
+    }
+
 
     @GetMapping
     public ResponseEntity<List<Showtimes>> findAll(){
@@ -64,7 +70,6 @@ public class ShowtimesController {
         }
         return ResponseEntity.ok(showtimes);
     }
-
 
         private String formatMessage(BindingResult result){
         List<Map<String,String>> errors = result.getFieldErrors().stream()
