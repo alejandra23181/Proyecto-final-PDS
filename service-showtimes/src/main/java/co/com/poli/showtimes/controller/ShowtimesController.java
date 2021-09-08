@@ -62,7 +62,6 @@ public class ShowtimesController {
         if(showtimes==null){
             return ResponseEntity.notFound().build();
         }
-        showtimesService.delete(showtimes);
         return ResponseEntity.ok(showtimes);
     }
 

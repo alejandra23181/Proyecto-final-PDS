@@ -62,7 +62,6 @@ public class UserController {
         if(user==null){
             return ResponseEntity.notFound().build();
         }
-        userService.delete(user);
         return ResponseEntity.ok(user);
     }
 
