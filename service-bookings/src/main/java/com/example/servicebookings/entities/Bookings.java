@@ -1,5 +1,7 @@
 package com.example.servicebookings.entities;
 
+import com.example.servicebookings.model.Showtime;
+import com.example.servicebookings.model.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,10 +24,19 @@ public class Bookings {
     @Column(name="id", updatable = false, nullable = false, unique = true)
     private Long id;
 
+    @Column(name="user_id")
+    private Long userId;
+    @Transient
+    private User user;
+
+    @Column(name="showtime_id")
+    private Long showtimeId;
+    @Transient
+    private Showtime showtime;
+
     @ElementCollection
     @Column(name="movies_id")
     private List<Long> movies;
-    
 
     @Override
     public boolean equals(Object o) {
