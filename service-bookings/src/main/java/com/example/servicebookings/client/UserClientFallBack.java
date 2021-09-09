@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserClientFallBack implements UserClient{
-    private ResponseBuilder builder;
+
+    private final ResponseBuilder builder;
 
     @Override
     public Response findById(Long id) {

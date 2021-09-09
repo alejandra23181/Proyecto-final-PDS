@@ -1,8 +1,10 @@
 package com.example.servicebookings.model;
 
+import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Showtime {
     private Long id;
     private Date date;

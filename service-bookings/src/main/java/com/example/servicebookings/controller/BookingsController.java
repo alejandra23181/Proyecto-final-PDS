@@ -2,6 +2,7 @@ package com.example.servicebookings.controller;
 
 import com.example.servicebookings.entities.Bookings;
 import com.example.servicebookings.services.BookingService;
+import com.example.servicebookings.services.BookingsServiceImpl;
 import com.example.servicebookings.utils.ErrorMessage;
 import com.example.servicebookings.utils.Response;
 import com.example.servicebookings.utils.ResponseBuilder;
@@ -25,44 +26,34 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BookingsController {
 
-    private final BookingService bookingService;
+    private final BookingsServiceImpl bookingsService;
     private final ResponseBuilder builder;
 
-    @PostMapping
+    @PostMapping()
     public Response save(@Valid @RequestBody Bookings bookings, BindingResult result) {
         if(result.hasErrors()){
             return builder.failed(formatMessage(result));
         }
-        bookingService.save(bookings);
+        bookingsService.save(bookings);
         return builder.success(bookings);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Bookings> delete(@PathVariable() Long id) {
-        Bookings bookings = bookingService.findById(id);
+    public Response delete(@PathVariable() Long id) {
+        Bookings bookings = bookingsService.findByNumberBooking(id);
         if (bookings == null) {
-            return ResponseEntity.notFound().build();
+            return builder.failed(bookings);
         }
-        bookingService.delete(bookings);
-        return ResponseEntity.ok(bookings);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Bookings>> findAll(){
-        List<Bookings> bookings = bookingService.findAll();
-        if(bookings.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(bookings);
+        return builder.success(bookings);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bookings> findById(@PathVariable("id") Long id){
-        Bookings bookings = bookingService.findById(id);
+    public Response getByNumberBooking(@PathVariable("id") Long id){
+        Bookings bookings = bookingsService.findByNumberBooking(id);
         if(bookings==null){
-            return ResponseEntity.notFound().build();
+            return builder.success();
         }
-        return ResponseEntity.ok(bookings);
+        return builder.success(bookings);
     }
 
     private String formatMessage(BindingResult result){

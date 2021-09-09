@@ -19,8 +19,8 @@ import java.util.List;
 public class BookingsServiceImpl implements BookingService{
 
     private final BookingsRepository bookingsRepository;
-    private UserClient userClient;
-    private ShowtimeClient showtimeClient;
+    private final UserClient userClient;
+    private final ShowtimeClient showtimeClient;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -47,6 +47,7 @@ public class BookingsServiceImpl implements BookingService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Bookings findByNumberBooking(Long id) {
         Bookings bookings = bookingsRepository.findByNumberBooking(id);
         ModelMapper modelMapper = new ModelMapper();

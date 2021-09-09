@@ -1,0 +1,14 @@
+ext {
+    set('springBootAdminVersion', "2.3.1")
+}
+
+dependencies {
+// https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server
+    implementation 'de.codecentric:spring-boot-admin-starter-server'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
