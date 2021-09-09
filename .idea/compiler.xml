@@ -9,6 +9,7 @@
         </processorPath>
         <module name="Multiproject-Movies.service-bookings.main" />
         <module name="Multiproject-Movies.service-users.main" />
+        <module name="Multiproject-Movies.service-config.main" />
         <module name="Multiproject-Movies.service-showtimes.main" />
         <module name="Multiproject-Movies.service-movie.main" />
       </profile>

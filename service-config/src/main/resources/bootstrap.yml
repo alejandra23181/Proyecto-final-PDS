@@ -1,0 +1,15 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: service-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:///C:/Users/Asus/OneDrive/Escritorio/UNIVERSIDAD/PDS/config-data
+  security:
+    user:
+      name: ${CONFIGUSER}
+      password: ${CONFIGPASSWORD}
+
