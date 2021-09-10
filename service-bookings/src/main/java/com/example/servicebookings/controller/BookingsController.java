@@ -41,7 +41,7 @@ public class BookingsController {
 
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable() Long id) {
-        Optional<Bookings> bookings = bookingsService.findById(id);
+        Optional<Bookings> bookings = Optional.ofNullable(bookingsService.findById(id));
         if (bookings == null) {
             return builder.failed(bookings);
         }
@@ -59,7 +59,7 @@ public class BookingsController {
 
     @GetMapping("/{id}")
     public Response getById(@PathVariable("id") Long id){
-        Optional<Bookings> bookings = bookingsService.findById(id);
+        Optional<Bookings> bookings = Optional.ofNullable(bookingsService.findById(id));
         if(bookings==null){
             return builder.success();
         }

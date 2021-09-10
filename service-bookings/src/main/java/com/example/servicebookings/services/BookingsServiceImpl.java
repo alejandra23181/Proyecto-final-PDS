@@ -8,10 +8,8 @@ import com.example.servicebookings.model.User;
 import com.example.servicebookings.repositories.BookingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +42,11 @@ public class BookingsServiceImpl implements BookingService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Bookings> findById(Long id) {
-        Optional<Bookings> bookings = bookingsRepository.findById(id);
+    public Bookings findById(Long id) {
+        Optional<Bookings> bookings = Optional.ofNullable(bookingsRepository.findById(id).orElse(null));
 
         ModelMapper modelMapper = new ModelMapper();
+        Object data = userClient.findById(bookings.get().getUserId()).getData();
 
         User user =
                 modelMapper.map(
@@ -55,13 +54,13 @@ public class BookingsServiceImpl implements BookingService{
                         User.class);
         bookings.get().setUser(user);
 
-        Showtime showtime =
+        /* Showtime showtime =
                 modelMapper.map(
                         showtimeClient.findById(bookings.get().getShowtimeId()).getData(),
                         Showtime.class);
-        bookings.get().setShowtime(showtime);
+        bookings.get().setShowtime(showtime);*/
 
-        return bookingsRepository.findById(id);
+        return bookingsRepository.findById(id).orElse(null);
     }
 
 }

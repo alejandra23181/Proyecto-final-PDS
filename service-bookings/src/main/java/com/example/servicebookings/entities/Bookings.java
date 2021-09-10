@@ -39,8 +39,6 @@ public class Bookings {
     @Column(name="movies_id")
     private List<Long> movies;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
