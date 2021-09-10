@@ -7,7 +7,7 @@ spring:
     config:
       server:
         git:
-          uri: file:///C:/Users/Asus/OneDrive/Escritorio/UNIVERSIDAD/PDS/config-data
+          uri: file:///C:/Users/Asus/OneDrive/Escritorio/UNIVERSIDAD/PDS/Multiproject/config-data
   security:
     user:
       name: ${CONFIGUSER}

@@ -57,12 +57,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") Long id){
+    public Response findById(@PathVariable("id") Long id){
         User user = userService.findById(id);
         if(user==null){
-            return ResponseEntity.notFound().build();
+            return builder.success();
         }
-        return ResponseEntity.ok(user);
+        return builder.success(user);
     }
 
     private String formatMessage(BindingResult result){
