@@ -1,8 +1,10 @@
 package com.example.servicebookings.services;
 
+import com.example.servicebookings.client.MovieClient;
 import com.example.servicebookings.client.ShowtimeClient;
 import com.example.servicebookings.client.UserClient;
 import com.example.servicebookings.entities.Bookings;
+import com.example.servicebookings.model.Movie;
 import com.example.servicebookings.model.Showtime;
 import com.example.servicebookings.model.User;
 import com.example.servicebookings.repositories.BookingsRepository;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class BookingsServiceImpl implements BookingService{
     private final BookingsRepository bookingsRepository;
     private final UserClient userClient;
     private final ShowtimeClient showtimeClient;
+    private final MovieClient movieClient;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -59,6 +63,15 @@ public class BookingsServiceImpl implements BookingService{
                         showtimeClient.findById(bookings.get().getShowtimeId()).getData(),
                         Showtime.class);
         bookings.get().setShowtime(showtime);
+
+        List<Long> itemList = bookings.get().getMovies_id().stream()
+                .map(movieItem -> {
+                    Movie movie = modelMapper.map(movieClient.findById(movieItem).getData(),Movie.class);
+                    bookings.get().setMovie(movie);
+                    return movieItem;
+                }).collect(Collectors.toList());
+
+
 
         return bookingsRepository.findById(id).orElse(null);
     }

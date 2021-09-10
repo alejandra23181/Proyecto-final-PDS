@@ -1,5 +1,4 @@
-package co.com.poli.commons.Librery;
-
+package com.example.movie.utils;
 
 import org.springframework.stereotype.Component;
 
@@ -8,7 +7,6 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Component
 public class ResponseBuilder {
-
     public Response success(){
         return Response.builder()
                 .data(OK)

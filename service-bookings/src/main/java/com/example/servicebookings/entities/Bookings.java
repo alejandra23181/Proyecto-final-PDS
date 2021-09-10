@@ -1,5 +1,6 @@
 package com.example.servicebookings.entities;
 
+import com.example.servicebookings.model.Movie;
 import com.example.servicebookings.model.Showtime;
 import com.example.servicebookings.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -37,7 +38,10 @@ public class Bookings {
 
     @ElementCollection
     @Column(name="movies_id")
-    private List<Long> movies;
+    private List<Long> movies_id;
+
+    @Transient
+    private Movie movie;
 
     @Override
     public boolean equals(Object o) {

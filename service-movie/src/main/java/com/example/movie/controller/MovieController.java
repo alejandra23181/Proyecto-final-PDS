@@ -1,17 +1,23 @@
 package com.example.movie.controller;
 
-import co.com.poli.commons.Librery.FormatMessage;
-import co.com.poli.commons.Librery.Response;
-import co.com.poli.commons.Librery.ResponseBuilder;
+
 import com.example.movie.entities.Movie;
 import com.example.movie.services.MovieService;
+import com.example.movie.utils.ErrorMessage;
+import com.example.movie.utils.Response;
+import com.example.movie.utils.ResponseBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/movies")
@@ -19,13 +25,12 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
-    private final ResponseBuilder builder = new ResponseBuilder();
-    private final FormatMessage message = new FormatMessage();
+    private final ResponseBuilder builder;
 
     @PostMapping
     public Response save(@Valid @RequestBody Movie movie, BindingResult result){
         if(result.hasErrors()){
-            return builder.failed(message.formatMessage(result));
+            return builder.failed(formatMessage(result));
         }
         movieService.save(movie);
         return builder.success(movie);
@@ -50,12 +55,34 @@ public class MovieController {
             return ResponseEntity.ok(movies);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> findById(@PathVariable("id") Long id) {
+    public Response findById(@PathVariable("id") Long id) {
         Movie movie = movieService.findById(id);
         if (movie == null) {
-            return ResponseEntity.notFound().build();
+            return builder.failed(movie);
         }
-        return ResponseEntity.ok(movie);
+        return builder.success(movie);
+    }
+
+    private String formatMessage(BindingResult result){
+        List<Map<String,String>> errors = result.getFieldErrors().stream()
+                .map(err -> {
+                    Map<String,String> error = new HashMap<>();
+                    error.put(err.getField(),err.getDefaultMessage());
+                    return error;
+                }).collect(Collectors.toList());
+
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .code("01")
+                .messages(errors)
+                .build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = "";
+        try{
+            json = objectMapper.writeValueAsString(errorMessage);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 
 

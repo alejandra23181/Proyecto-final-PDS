@@ -1,4 +1,4 @@
-package co.com.poli.commons.Librery;
+package com.example.movie.utils;
 
 import lombok.Builder;
 import lombok.Data;
