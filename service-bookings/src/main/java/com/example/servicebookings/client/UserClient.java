@@ -12,6 +12,4 @@ public interface UserClient {
     @GetMapping("/users/{id}")
     Response findById(@PathVariable("id") Long id);
 
-    @GetMapping("/users/numberId/{id}")
-    Response findNumberId(@PathVariable("id") Long id);
 }

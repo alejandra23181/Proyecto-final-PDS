@@ -2,6 +2,7 @@ package com.example.servicebookings.entities;
 
 import com.example.servicebookings.model.Showtime;
 import com.example.servicebookings.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,6 +38,8 @@ public class Bookings {
     @ElementCollection
     @Column(name="movies_id")
     private List<Long> movies;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
     @Override
     public boolean equals(Object o) {

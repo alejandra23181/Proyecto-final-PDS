@@ -18,9 +18,4 @@ public class UserClientFallBack implements UserClient{
         return builder.success(user);
     }
 
-    @Override
-    public Response findNumberId(Long id) {
-        User user = new User();
-        return builder.success(user);
-    }
 }

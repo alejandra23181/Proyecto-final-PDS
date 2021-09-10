@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,21 +41,31 @@ public class BookingsController {
 
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable() Long id) {
-        Bookings bookings = bookingsService.findByNumberBooking(id);
+        Optional<Bookings> bookings = bookingsService.findById(id);
         if (bookings == null) {
             return builder.failed(bookings);
         }
         return builder.success(bookings);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Bookings>> findAll(){
+        List<Bookings> bookings = bookingsService.findAll();
+        if (bookings.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(bookings);
+    }
+
     @GetMapping("/{id}")
-    public Response getByNumberBooking(@PathVariable("id") Long id){
-        Bookings bookings = bookingsService.findByNumberBooking(id);
+    public Response getById(@PathVariable("id") Long id){
+        Optional<Bookings> bookings = bookingsService.findById(id);
         if(bookings==null){
             return builder.success();
         }
         return builder.success(bookings);
     }
+
 
     private String formatMessage(BindingResult result){
         List<Map<String,String>> errors = result.getFieldErrors().stream()

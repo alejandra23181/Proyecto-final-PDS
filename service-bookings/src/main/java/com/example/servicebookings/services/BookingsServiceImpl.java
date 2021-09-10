@@ -8,11 +8,13 @@ import com.example.servicebookings.model.User;
 import com.example.servicebookings.repositories.BookingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,26 +44,24 @@ public class BookingsServiceImpl implements BookingService{
 
     @Override
     @Transactional(readOnly = true)
-    public Bookings findById(Long id) {
-        return bookingsRepository.findById(id).orElse(null);
-    }
+    public Optional<Bookings> findById(Long id) {
+        Optional<Bookings> bookings = bookingsRepository.findById(id);
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Bookings findByNumberBooking(Long id) {
-        Bookings bookings = bookingsRepository.findByNumberBooking(id);
         ModelMapper modelMapper = new ModelMapper();
+
         User user =
                 modelMapper.map(
-                        userClient.findById(bookings.getUserId()).getData(),
+                        userClient.findById(bookings.get().getUserId()).getData(),
                         User.class);
-        bookings.setUser(user);
+        bookings.get().setUser(user);
 
         Showtime showtime =
                 modelMapper.map(
-                  showtimeClient.findById(bookings.getShowtimeId()).getData(),
+                        showtimeClient.findById(bookings.get().getShowtimeId()).getData(),
                         Showtime.class);
-        bookings.setShowtime(showtime);
-        return bookingsRepository.findByNumberBooking(id);
+        bookings.get().setShowtime(showtime);
+
+        return bookingsRepository.findById(id);
     }
+
 }
