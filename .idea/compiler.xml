@@ -11,6 +11,7 @@
         <module name="Multiproject-Movies.service-register.main" />
         <module name="Multiproject-Movies.service-showtimes.main" />
         <module name="Multiproject-Movies.service-bookings.main" />
+        <module name="Multiproject-Movies.library-commons.main" />
         <module name="Multiproject-Movies.service-config.main" />
         <module name="Multiproject-Movies.service-gateway.main" />
         <module name="Multiproject-Movies.service-admin.main" />

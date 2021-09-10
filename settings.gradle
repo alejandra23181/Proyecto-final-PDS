@@ -4,6 +4,8 @@ include 'service-users'
 include 'service-movie'
 include 'service-showtimes'
 include 'service-bookings'
+
+include 'library-commons'
 include 'service-config'
 include 'service-register'
 include 'service-gateway'
