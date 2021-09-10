@@ -46,7 +46,7 @@ public class BookingsServiceImpl implements BookingService{
         Optional<Bookings> bookings = Optional.ofNullable(bookingsRepository.findById(id).orElse(null));
 
         ModelMapper modelMapper = new ModelMapper();
-        Object data = userClient.findById(bookings.get().getUserId()).getData();
+     /*  Object data = userClient.findById(bookings.get().getUserId()).getData();*/
 
         User user =
                 modelMapper.map(
@@ -54,7 +54,7 @@ public class BookingsServiceImpl implements BookingService{
                         User.class);
         bookings.get().setUser(user);
 
-        /* Showtime showtime =
+     /* Showtime showtime =
                 modelMapper.map(
                         showtimeClient.findById(bookings.get().getShowtimeId()).getData(),
                         Showtime.class);
