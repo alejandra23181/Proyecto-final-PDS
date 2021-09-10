@@ -63,12 +63,12 @@ public class ShowtimesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Showtimes> getById(@PathVariable("id") Long id){
+    public Response getById(@PathVariable("id") Long id){
         Showtimes showtimes = showtimesService.findById(id);
         if(showtimes==null){
-            return ResponseEntity.notFound().build();
+            return builder.success();
         }
-        return ResponseEntity.ok(showtimes);
+        return builder.success(showtimes);
     }
 
         private String formatMessage(BindingResult result){

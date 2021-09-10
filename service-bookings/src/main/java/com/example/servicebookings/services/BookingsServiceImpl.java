@@ -48,17 +48,17 @@ public class BookingsServiceImpl implements BookingService{
         ModelMapper modelMapper = new ModelMapper();
      /*  Object data = userClient.findById(bookings.get().getUserId()).getData();*/
 
-        User user =
+       User user =
                 modelMapper.map(
                         userClient.findById(bookings.get().getUserId()).getData(),
                         User.class);
         bookings.get().setUser(user);
 
-     /* Showtime showtime =
+      Showtime showtime =
                 modelMapper.map(
                         showtimeClient.findById(bookings.get().getShowtimeId()).getData(),
                         Showtime.class);
-        bookings.get().setShowtime(showtime);*/
+        bookings.get().setShowtime(showtime);
 
         return bookingsRepository.findById(id).orElse(null);
     }
