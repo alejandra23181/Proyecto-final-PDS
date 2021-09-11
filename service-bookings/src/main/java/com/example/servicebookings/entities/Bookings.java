@@ -39,7 +39,6 @@ public class Bookings {
     @ElementCollection
     @Column(name="movies_id")
     private List<Long> movies_id;
-
     @Transient
     private Movie movie;
 

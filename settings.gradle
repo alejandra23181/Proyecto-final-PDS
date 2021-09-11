@@ -9,4 +9,4 @@ include 'service-config'
 include 'service-register'
 include 'service-gateway'
 include 'service-admin'
-include 'library-commons'
+
